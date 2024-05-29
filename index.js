@@ -38,3 +38,39 @@ show({
     get: () => "This still works",
     empty: () => { },
 });
+class Animal {
+    constructor(name, age) {
+        this._name = name;
+        this.age = age;
+    }
+    run() {
+        console.log(this._name, "is running...");
+    }
+    get name() {
+        return this._name;
+    }
+}
+Animal.type = "N/A";
+(() => {
+    Animal.type = "Unknown";
+})();
+class DisabledAnimal extends Animal {
+    constructor(name, age, disabledParts) {
+        super(name, age);
+        this.disabledParts = disabledParts;
+    }
+    run() {
+        if (this.disabledParts.includes("feet")) {
+            console.error("No, I can't run");
+        }
+    }
+}
+class DisabledDog extends DisabledAnimal {
+}
+const dog = new Animal("Dog", 2);
+// dog.name = 'Invalid operation | readonly property'
+console.log(dog.name);
+console.log(dog.age);
+dog.run();
+const anotherDog = new DisabledDog("Disabled", 1, ["feet"]);
+anotherDog.run();
