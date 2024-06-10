@@ -99,7 +99,7 @@ abstract class DisabledAnimal extends Animal {
   }
 
   run(): void {
-    if (this.disabledParts.includes("feet")) {
+    if (this.disabledParts.indexOf("feet") != -1) {
       console.error("No, I can't run");
     }
   }
@@ -115,3 +115,38 @@ dog.run();
 
 const anotherDog = new DisabledDog("Disabled", 1, ["feet"]);
 anotherDog.run();
+
+class Fish extends Animal {
+  swim() {
+    console.log("I'm swimming");
+  }
+}
+class Bird extends Animal {
+  fly() {
+    console.log("I'm flying");
+  }
+}
+function getPets(): Animal[] {
+  return [new Fish("John Cena", 1), new Bird("Unnamed", 1)];
+}
+
+// type predicate
+function isBird(pet: Animal): pet is Bird {
+  return pet instanceof Bird;
+}
+
+getPets().forEach((animal) => {
+  if (isBird(animal)) {
+    animal.fly();
+  } else if (animal instanceof Fish) {
+    animal.swim();
+  }
+});
+
+function overloading(x: string): string;
+function overloading(a: string, b: string): string;
+function overloading(first: string, second?: string): string {
+  // two first signatures are called overload signatures
+  return second !== undefined ? first + second : first;
+}
+console.log(overloading("3", "7"));
