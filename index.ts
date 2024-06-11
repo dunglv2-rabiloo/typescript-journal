@@ -150,3 +150,31 @@ function overloading(first: string, second?: string): string {
   return second !== undefined ? first + second : first;
 }
 console.log(overloading("3", "7"));
+
+interface Cookies {
+  readonly [key: string]: number | string;
+}
+const cookies: Cookies = {
+  "Max-Age": 1000,
+};
+console.log(cookies["Max-Age"]);
+// cookies["Max-Age"] = 0; // error: readonly attribute
+
+/* == Mapped Types == */
+type MyField = {
+  name: string;
+  default: string;
+};
+class Group<Field extends { [Key in keyof Field]: MyField }> {
+  fields: Field;
+  constructor(fields: Field) {
+    this.fields = fields;
+  }
+}
+const group = new Group({
+  email: {
+    name: "email",
+    default: "user@example.com",
+  },
+});
+console.log(group.fields.email.default);

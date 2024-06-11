@@ -152,3 +152,10 @@ function overloading(first, second) {
     return second !== undefined ? first + second : first;
 }
 console.log(overloading("3", "7"));
+var cookies = {
+    "Max-Age": 1000,
+};
+console.log(cookies["Max-Age"]);
+var group = {
+    name: "hello world",
+};
